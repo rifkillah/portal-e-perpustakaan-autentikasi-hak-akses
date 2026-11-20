@@ -12,10 +12,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // Mendaftarkan alias middleware 'role' di sini
         $middleware->alias([
             'role' => \App\Http\Middleware\CekRole::class,
         ]);
+        $middleware->redirectTo(
+            guests: '/perpus/login',
+            users: '/perpus/dashboard'
+        );
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
